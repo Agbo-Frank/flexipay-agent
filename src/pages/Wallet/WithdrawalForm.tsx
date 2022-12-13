@@ -72,7 +72,6 @@ export function WithdrawalForm({open, close}: {open: boolean; close: () => void 
 
                         <Button
                             variant="outlined" 
-                            color="secondary" 
                             type="button"
                             sx={{width: '50%'}}
                             onClick={close}>
@@ -82,7 +81,6 @@ export function WithdrawalForm({open, close}: {open: boolean; close: () => void 
                         <LoadingButton
                             loading={withdrawing}
                             variant="contained"
-                            color="secondary"
                             type="submit"
                             disableElevation
                             size="large"

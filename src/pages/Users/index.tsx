@@ -47,10 +47,6 @@ export function Users(){
                                             <UserItem />
                                             <UserItem />
                                             <UserItem />
-                                            <UserItem />
-                                            <UserItem />
-                                            <UserItem />
-                                            <UserItem />
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
