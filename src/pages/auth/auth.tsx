@@ -1,5 +1,5 @@
 import { Wrapper } from "../../components/StyleComponents"
-import authenticationImage from '../../asset/authenticationImage.png'
+import authenticationImage from '../../asset/authenticationImage.jpeg'
 import { Tab, Tabs } from "@mui/material"
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";

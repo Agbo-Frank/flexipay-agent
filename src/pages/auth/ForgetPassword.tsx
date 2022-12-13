@@ -38,12 +38,15 @@ export function ForgetPassword(){
 
                     <div className="md:flex justify-between w-full my-4">
                         <div className="my-2 w-full md:w-1/2 md:px-3">
-                            <Button variant="outlined" color="secondary" size="large" className="w-full" onClick={()=>navigate(-1)}>Cancel</Button>
+                            <Button 
+                                variant="outlined" 
+                                size="large" 
+                                className="w-full" 
+                                onClick={()=>navigate(-1)}>Cancel</Button>
                         </div>
                         <div className="my-2 w-full md:w-1/2 md:px-3">
                             <LoadingButton 
                                 loading={isLoading}
-                                color="secondary"
                                 type="submit"
                                 variant="contained"
                                 className="w-full h-full"
