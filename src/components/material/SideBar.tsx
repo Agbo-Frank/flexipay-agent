@@ -75,7 +75,7 @@ export function SideBar(): JSX.Element {
                 <small className="text-xs">{buisness?.is_approved ? "Verified" : "Unverified"}</small>
             </div>
         </div> */}
-        <div className="flex flex-col justify-between max-h-[95vh]">
+        <div className="flex flex-col justify-between max-h-[95vh] py-5">
             <div className="">
                 <SideBarItem 
                 Icon={DashboardIcon} name="Dashboard" link="dashboard"

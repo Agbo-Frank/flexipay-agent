@@ -46,17 +46,17 @@ export function Wallet(){
             <CreateAccForm open={open.createAccForm} close={() => setOpen(state => ({...state, createAccForm: false}))}/>
             <div>
                 <TitlePage>Wallet</TitlePage>
-                <Wrapper styles="md:grid grid-cols-3 gap-4 mt-5">
+                <Wrapper styles="flex justify-center">
 
-                    <div className="my-3">
+                    <div className="w-4/12">
                         <WalletBalance open={open} setOpen={setOpen}/>
                     </div>
 
-                    <div className="my-3 ">
+                    {/* <div className="my-3 ">
                         <ReferralBalance  open={open} setOpen={setOpen}/>
-                    </div>
+                    </div> */}
 
-                    <div className="my-3 flex flex-col justify-between p-3 bg-[#FFF9F7] rounded-md">
+                    {/* <div className="my-3 flex flex-col justify-between p-3 bg-[#FFF9F7] rounded-md">
                         <div className="flex justify-between items-center">
                             <span className="text-[12px] font-light">Wallet ID: <span className="relative">Flexi237 <i className="text-[11px] fa-regular fa-clone absolute -top-1.5 -right-3.5"></i></span></span>
                             <i className="fa-solid text-[12.5px] fa-circle-info"></i>
@@ -74,14 +74,14 @@ export function Wallet(){
                                 Fund Wallet
                             </Button>
                         </div>
-                    </div>
+                    </div> */}
                 </Wrapper>
                 {/* <div><SavedCard /></div> */}
-                <div>
+                <div className="mt-5">
                     <div className="flex bg-white rounded-t-lg">
                         <div 
-                        className={` mb-2 ${tab === 0 ? 'text-primary-dark-blue border-primary-dark-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200'} font-medium border-solid text-sm sm:text-base  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
-                        onClick={() => setTab(0)}>Wallet Transaction</div>
+                        className={`mb-2 text-primary-dark-blue font-medium text-sm sm:text-base  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
+                        >Wallet Transaction</div>
                     </div>
                     <WalletTransaction open={open} setOpen={setOpen}/>
                     

@@ -68,13 +68,13 @@ export function Dashboard(){
                         title="Total User"
                         count="10"
                     />
-                    <DashboardCard 
+                    {/* <DashboardCard 
                         color="#F5A851"
                         Icon={NairaIcon}
                         link="/order/pending"
                         title="Total Earnings"
                         count={"10000"}
-                    />
+                    /> */}
                     <DashboardCard 
                         color="#766EDA"
                         Icon={NairaIcon}

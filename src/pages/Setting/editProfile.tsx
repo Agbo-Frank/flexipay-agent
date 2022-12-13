@@ -206,12 +206,10 @@ export function EditProfile(){
                 </button>
                 <div className="flex space-x-3 w-full md:w-4/12 ">
                     <Button variant="outlined" 
-                        color="secondary"
                         sx={{width: '50%'}}
                         onClick={() => navigate(-1)}>Cancel</Button>
                     <LoadingButton 
                         variant="contained"
-                        color="secondary"
                         type="submit"
                         loading={isLoading}
                         disableElevation
