@@ -38,36 +38,23 @@ function Row({txn}: {txn: ITransacation | any}){
 
 export function WalletTransaction({ open, setOpen}: IWalletBalanceProps){
     let [page, setPage] = useState(0)
-    // let [getTransaction, {transaction, pagination, isLoading}] = useLazyGetTransactionQuery({
-    //     selectFromResult: ({ data, isLoading }) => ({
-    //         transaction: data?.result.data,
-    //         pagination: data?.result,
-    //         isLoading
-    //     }),
-    //     refetchOnFocus: true,
-    //     refetchOnReconnect: true
-    // })
+    let [getTransaction, {transaction, pagination, isLoading}] = useLazyGetTransactionQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            transaction: data?.result.data,
+            pagination: data?.result,
+            isLoading
+        }),
+        refetchOnFocus: true,
+        refetchOnReconnect: true
+    })
 
-    const transaction = {
-        reference: "Trans-ref-1234567",
-        amount: "20000",
-        charges: "100",
-        prev_balance: "10000",
-        new_balance: "30000",
-        status: "SUCCESSFUL",
-        type: "CREDIT",
-        created_at: "05/08/2022",
-        updated_at: "05/08/2022",
-        info: "Your account has been credited with."
-    }
-
-    // useEffect(() => {
-    //     getTransaction(page + 1)
-    // }, [transaction, page, isLoading])
+    useEffect(() => {
+        getTransaction(page + 1)
+    }, [transaction, page, isLoading])
     return(
         <div>
-            {/* {
-                isLoading || (transaction && transaction?.length > 0) ?  */}
+            {
+                isLoading || (transaction && transaction?.length > 0) ? 
                 <div>
                     <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 500 }}>
                         <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
@@ -81,23 +68,22 @@ export function WalletTransaction({ open, setOpen}: IWalletBalanceProps){
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {/* {
+                                {
                                     transaction?.map((txn) => (<Row txn={txn}/>))
-                                } */}
-                                <Row txn={transaction}/>
+                                }
                             </TableBody>
                         </Table>
-                        {/* <div>
+                        <div>
                             {   
                                 isLoading &&
                                 <div className="flex justify-center w-full p-7 border mx-auto">
                                     <CircularProgress /> 
                                 </div>
                             }
-                        </div> */}
+                        </div>
                     </TableContainer>
-                        {/* {
-                            pagination && */}
+                        {
+                            pagination &&
                             <TablePagination
                                 rowsPerPageOptions={[15]}
                                 component="div"
@@ -107,10 +93,9 @@ export function WalletTransaction({ open, setOpen}: IWalletBalanceProps){
                                 onPageChange={(e, page) => setPage(page)}
                                 className="bg-white"
                             />
-                        {/* } */}
+                        }
 
-                    </div> 
-                    {/* :
+                    </div> :
                     <Wrapper styles="grid place-items-center">
                         <Empty 
                             button={null} 
@@ -118,9 +103,8 @@ export function WalletTransaction({ open, setOpen}: IWalletBalanceProps){
                             title="No Transaction Yet" 
                             message="You currently don’t have any Trasaction at the moment, kindly fund your wallet" 
                         />
-                    </Wrapper> */}
-
-            
+                    </Wrapper>
+            }
         </div>
     )
 }

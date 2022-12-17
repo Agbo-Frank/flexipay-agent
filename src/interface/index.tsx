@@ -129,6 +129,13 @@ export interface IWithdraw {
     full_name: string;
 }
 
+export interface IAgentWithdraw {
+    account_name: string;
+    bank_name: string;
+    account_number: string;
+    amount: string;
+}
+
 export interface IFundWalletByCard {
     full_name: string;
     email: string;
@@ -276,3 +283,38 @@ export interface IInputProps {
 }
 
 export type ITrigger<T, Response> = MutationTrigger<MutationDefinition<T, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, never, Response, "Auth">>
+
+export interface IAgentUsers {
+    uuid: string;
+    first_name: string;
+    last_name: string;
+    referrer_id: string;
+    email: string;
+    referrer_links: string;
+    ref_code: string;
+    avatar: string;
+    address: string;
+    dob: string;
+    linkedin_url: string;
+    phone_number: string;
+}
+
+export interface IAgentWallet {
+    id: number;
+    current_balance: number;
+    total_earning: number;
+    total_withdrawal: number;
+}
+
+export interface IAgentDashboardDetails {
+    users: number;
+    account: {
+        id: number;
+        user_id: number;
+        current_balance: number;
+        total_earning: number;
+        total_withdrawal: number;
+        created_at: Date;
+        updated_at: Date;
+    };
+}

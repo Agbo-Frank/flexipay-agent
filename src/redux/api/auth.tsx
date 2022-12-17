@@ -21,7 +21,7 @@ export const AuthApi = createApi({
     endpoints: (build) => ({
         register: build.mutation<IAuthResponse, IRegister>({
             query: (body) => ({
-                url: "/auth/register",
+                url: "/agent/register",
                 method: 'POST',
                 body,
             }),

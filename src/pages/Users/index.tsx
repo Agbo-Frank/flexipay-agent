@@ -1,6 +1,6 @@
 import { TitlePage, Wrapper } from "../../components/StyleComponents"
 import {DashboardWrapper} from "../../components/layout"
-import { CartIcon, SearchIcon } from "../../components/icons";
+import { CartIcon, CopyIcon, SearchIcon, UserIcon } from "../../components/icons";
 // import { useLazyGetOrderQuery, } from "../../redux/slice/order";
 import { memo, useEffect, useState } from "react";
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
@@ -10,9 +10,22 @@ import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TablePa
 import { Empty } from "../../components/layout";
 import { formatString } from "../../utils";
 import UserItem from "./UserItem";
+import { useLazyGetAgentUsersQuery } from "../../redux/api/agent";
+import { IAgentUsers } from "../../interface";
 
 export function Users(){
     const [page, setPage] = useState(0)
+    const [getAgentUsers, {pagination, users, isLoading}] = useLazyGetAgentUsersQuery({
+        selectFromResult: ({data, isLoading}) => ({
+            pagination: data?.result,
+            users: data?.result.data,
+            isLoading
+        })
+    })
+
+    useEffect(() => {
+        getAgentUsers({quantity: 5})
+    }, [])
     return(
         <DashboardWrapper>
             <div>
@@ -27,58 +40,44 @@ export function Users(){
                 </Wrapper>
 
                 <div>
-                        {/* {
-                            loading || (orders && orders.length > 0) ?  */}
-                            <div>
-                                <TableContainer className="bg-white rounded-lg mt-3" sx={{ maxHeight: 500 }}>
-                                    <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
-                                        <TableHead>
-                                            <TableRow className="text-[#545362]">
-                                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Name</TableCell>
-                                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Sign up Date</TableCell>
-                                                {/* <TableCell sx={{color: '#545362', fontSize: 15.5}}>Actions</TableCell> */}
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {/* {
-                                                    orders?.map((order: any, idx: any) => <OrderItem order={order} key={idx} />)
-                                            } */}
-                                            <UserItem />
-                                            <UserItem />
-                                            <UserItem />
-                                            <UserItem />
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                                <TablePagination
-                                    rowsPerPageOptions={[15]}
-                                    component="div"
-                                    count={20}
-                                    rowsPerPage={15}
-                                    page={page}
-                                    onPageChange={(e, page) => setPage(page)}
-                                    className="bg-white"
-                                />
-                            </div>
-                            {/* <Wrapper styles="grid place-items-center">
-                                <Empty 
-                                    button={null}
-                                        // <Button
-                                        //     color="secondary"
-                                        //     variant="contained"
-                                        //     startIcon={<CartIcon color="white" size="16"/>}
-                                        //     // onClick={() => setOpen(state => ({...state, fundWallet: true}))}
-                                        //     size="large"
-                                        // >
-                                        //     Fund Wallet
-                                        // </Button>
-                                    Icon={CartIcon} 
-                                    title="No order" 
-                                    message="You have no order yet!" 
-                                />
-                            </Wrapper> */}
-                        {/* } */}
-                    
+                    {
+                        isLoading || (users && users.length > 0) ?  
+                        <div>
+                            <TableContainer className="bg-white rounded-lg mt-3" sx={{ maxHeight: 500 }}>
+                                <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
+                                    <TableHead>
+                                        <TableRow className="text-[#545362]">
+                                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Name</TableCell>
+                                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Sign up Date</TableCell>
+                                            {/* <TableCell sx={{color: '#545362', fontSize: 15.5}}>Actions</TableCell> */}
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                    {
+                                        users?.map((user: IAgentUsers, idx: any) => <UserItem user={user} key={idx} />)
+                                    }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            <TablePagination
+                                rowsPerPageOptions={[15]}
+                                component="div"
+                                count={20}
+                                rowsPerPage={15}
+                                page={page}
+                                onPageChange={(e, page) => setPage(page)}
+                                className="bg-white"
+                            />
+                        </div>:
+                        <Wrapper styles="grid place-items-center">
+                            <Empty
+                                button={null} 
+                                Icon={UserIcon} 
+                                title="You have not referred any users yet" 
+                                message="You have not referred any users yet, click on the button on the header to copy your referral code" 
+                            />
+                        </Wrapper>
+                    }
                 </div>
             
             </div>

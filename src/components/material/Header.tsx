@@ -17,6 +17,7 @@ export function Header(){
         setCopied(true)
         await setTimeout(() => setCopied(false), 5000)
     }
+    
     let [getUser, { user, loading }] = useLazyGetUserQuery({
         selectFromResult: ({ data, isLoading}) => ({
             user: data?.result.data,
@@ -32,6 +33,8 @@ export function Header(){
         }
     }, [isAuth])
 
+    console.log(user)
+
   return(
     <div className="w-full">
       <header className="w-full md:flex justify-between relative py-3 px-3  bg-white items-center border">
@@ -42,7 +45,7 @@ export function Header(){
           </div>
         </div>
         <div className="py-2 w-full relative flex justify-between bg-w rounded-xl border-[#C6C6CA] items-center md:w-7/12 p-1 pl-3 border overflow-hidden h-fit">
-          {/* {loadingVendor ? (<Skeleton width="100%" sx={{fontSize: 14}}/>) : (<span ref={code} className="truncate"> {FLEXIPAY_USER_URL + vendor?.vendor_profile.name_slug || "https://flexipay.com"}</span>)} */}
+          {loading ? (<Skeleton width="100%" sx={{fontSize: 14}}/>) : (<span ref={code} className="truncate"> {user?.referral_link}</span>)}
           <div 
             className="bg-primary-blue text-white px-5 h-full text-sm flex cursor-pointer items-center space-x-2 absolute right-0 top-0"
             onClick={copy}

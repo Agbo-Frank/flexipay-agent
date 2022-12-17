@@ -27,8 +27,6 @@ export function VerifyEmail(){
 
     const formik = FPVerification(resendVerificationLink, setOpenDialog, setIsSent)
 
-    const navigate = useNavigate()
-
     async function sendLink(){
         if(!isSent){
             if(searchParams.has('email')){
@@ -45,7 +43,7 @@ export function VerifyEmail(){
                     setIsSent(true)
                     setVerified(true)
     
-                    await setTimeout(() => setIsSent(false), (1000 * 60 * 5));
+                    await setTimeout(() => setIsSent(false), (1000 * 60 * 2));
                 }
             }
             else{
@@ -81,7 +79,7 @@ export function VerifyEmail(){
         }
         if(searchParams.has('from')){
             setIsSent(true)
-            setTimeout(() => setIsSent(false), (1000 * 60 * 10));
+            setTimeout(() => setIsSent(false), (1000 * 60 * 2));
         }
     }, [searchParams])
 
@@ -106,7 +104,7 @@ export function VerifyEmail(){
                         }
                         {
                             !verified && isSent ? 
-                            <small>Verification link sent</small>:
+                            <small className='text-primary-orange-200 font-medium cursor-pointer'>Verification link sent</small>:
                             <span className="block font-light">
                                 Didn’t recieve any mail?
                                 <i 
@@ -137,12 +135,10 @@ export function VerifyEmail(){
                         <DialogActions>
                             <Button
                             onClick={() => setOpenDialog(false)}
-                            color="secondary"
                             variant="outlined">Cancel</Button>
                             <LoadingButton
                             type="submit"
                             loading={isLoading}
-                            color="secondary"
                             variant="contained">
                                 Resend
                             </LoadingButton>

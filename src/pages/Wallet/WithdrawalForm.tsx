@@ -6,8 +6,8 @@ import { ModalWrapper } from "../../components/modal";
 import { FormInput, SelectInput } from "../../components/material";
 import { FPFormikWithdraw } from "./service";
 import { 
-    useGetUserQuery, useLazyGetAllBanksQuery, 
-    useWithdrawFundMutation 
+    useLazyGetAllBanksQuery, 
+    useAgentWithdrawMutation
 } from "../../redux/api";
 import { NairaIcon, UserIcon } from "../../components/icons";
 
@@ -16,22 +16,21 @@ export function WithdrawalForm({open, close}: {open: boolean; close: () => void 
     let [banks, setBanks] = useState<ISelectOptions[]>([])
 
     let [getBanks, {isLoading}] = useLazyGetAllBanksQuery()
-    let { data: user } = useGetUserQuery()
-    let [withdraw, { isLoading: withdrawing }] = useWithdrawFundMutation()
+    let [withdraw, { isLoading: withdrawing }] = useAgentWithdrawMutation()
 
     useEffect(() => {
         if(open){
             getBanks()
                 .unwrap()
                 .then(res => {
-                    let banks = res.result.data.map(bank => ({label: bank.bank_name, value: bank.cbn_code}))
+                    let banks = res.result.data.map(bank => ({label: bank.bank_name, value: bank.bank_name}))
                     setBanks(banks)
                 })
                 .catch((err) => console.log(err))
         }
     }, [isLoading, open])
 
-    const formik = FPFormikWithdraw(user?.result.data, withdraw, close)
+    const formik = FPFormikWithdraw(withdraw, close)
     
     return(
         <ModalWrapper isOpen={open} size="medium" closeModal={close}>
@@ -43,13 +42,13 @@ export function WithdrawalForm({open, close}: {open: boolean; close: () => void 
                 <form className="w-full px-8 my-7" onSubmit={formik.handleSubmit}>
                     <FormInput 
                         type="text" 
-                        name="full_name" 
-                        label={user?.result.data.first_name ? user?.result.data.first_name + " " + user?.result.data.last_name : "Full Name"}
-                        Icon={NairaIcon}
+                        name="account_name" 
+                        label={"Account Name"}
+                        Icon={UserIcon}
                         formik={formik}
                     />
                     <SelectInput 
-                        name="bank_code" 
+                        name="bank_name" 
                         label="Bank"
                         data={banks}
                         formik={formik}
@@ -65,7 +64,7 @@ export function WithdrawalForm({open, close}: {open: boolean; close: () => void 
                         type="text" 
                         name="amount" 
                         label="Amount"
-                        Icon={UserIcon}
+                        Icon={NairaIcon}
                         formik={formik}
                     />
                     <div className="flex justify-center items-center gap-4 my-8 w-10/12 mx-auto">

@@ -4,7 +4,7 @@ import { Wrapper } from "../../components/StyleComponents";
 import {DashboardWrapper} from "../../components/layout";
 import { 
     BagIcon, CartIcon, 
-    NairaIcon, WithdrawIcon 
+    NairaIcon, UserIcon, WithdrawIcon 
 } from "../../components/icons";
 import {Iicon} from "../../interface";
 // import { useGetOrderQuery } from "../../redux/slice/order";
@@ -16,6 +16,7 @@ import FundWallet from "../Wallet/FundWallet";
 import { WalletBalance } from "../Wallet/WalletBalance";
 import WithdrawalForm from "../Wallet/WithdrawalForm";
 import NewUsers from "./NewUsers";
+import { useLazyGetAgentBalanceQuery, useLazyGetAgentDashboardQuery } from "../../redux/api/agent";
 
 function DashboardCard({Icon, color, title, count, link}: {Icon: React.FC<Iicon>; color: string, title: string, link: string, count: string}){
     return(
@@ -33,40 +34,33 @@ function DashboardCard({Icon, color, title, count, link}: {Icon: React.FC<Iicon>
 
 
 export function Dashboard(){
-    let { user, loadingUser} = useGetUserQuery(undefined,{
-        refetchOnFocus: true,
-        refetchOnReconnect: true,
+    let [getAgentDashboard, {data, isLoading}] = useLazyGetAgentDashboardQuery({
         selectFromResult: ({ data, isLoading}) => ({
-            user: data?.result.data,
-            loadingUser: isLoading
+            data: data?.result,
+            isLoading
         })
     })
-
-    let [getUserBalance, { data: wallet }] = useLazyGetWalletDetailsQuery()
-
-    useEffect(() => {
-        if(user?.reserved_account?.account_number){
-            getUserBalance()
-        }
-    }, [user, loadingUser])
+    console.log(data)
     let [open, setOpen] = useState({
         createAccForm: false,
         fundWallet: false,
         withdraw: false
     })
+
+    useEffect(() => {
+        getAgentDashboard()
+    }, [])
     return(
         <DashboardWrapper>
-            <FundWallet open={open.fundWallet} close={() => setOpen(state => ({...state, fundWallet: false}))}/>
             <WithdrawalForm open={open.withdraw} close={() => setOpen(state => ({...state, withdraw: false}))}/>
-            <CreateAccForm open={open.createAccForm} close={() => setOpen(state => ({...state, createAccForm: false}))}/>
             <div className="w-full md:pr-7 space-y-5">
                 <div className="md:grid grid-cols-4 gap-3">
                     <DashboardCard 
                         color="#77CFBB"
-                        Icon={BagIcon}
+                        Icon={UserIcon}
                         link="/product"
                         title="Total User"
-                        count="10"
+                        count={data?.users.toString() || "0"}
                     />
                     {/* <DashboardCard 
                         color="#F5A851"
@@ -80,7 +74,7 @@ export function Dashboard(){
                         Icon={NairaIcon}
                         link="/wallet"
                         title="Balance"
-                        count={wallet?.result?.data?.balance || "0" }
+                        count={data?.account.current_balance.toString() || "0" }
                     />
                 </div>
 

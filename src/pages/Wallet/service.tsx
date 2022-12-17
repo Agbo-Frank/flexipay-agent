@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { ICreateAccountBody, IFundWalletByCard, IFundWalletResponse, IResponse, ITrigger, IUser, IWithdraw } from '../../interface';
+import { IAgentWithdraw, ICreateAccountBody, IFundWalletByCard, IFundWalletResponse, IResponse, ITrigger, IUser, IWithdraw } from '../../interface';
 import { validURL } from '../../utils';
 import { toggleSnackBar } from '../../redux/slice/modal';
 import { FormikHelpers, useFormik } from 'formik';
@@ -82,25 +82,21 @@ export function FundWalletByCard(fundWallet: ITrigger<IFundWalletByCard, IRespon
 
 }
 
-export function FPFormikWithdraw(user: IUser | undefined, withdraw: ITrigger<IWithdraw, IResponse<{data: any}>>, done: () => void | any){
+export function FPFormikWithdraw(withdraw: ITrigger<IAgentWithdraw, IResponse<{data: any}>>, done: () => void | any){
     let dispatch = useDispatch()
 
-    let initialValues: IWithdraw = {
-        full_name: '',
+    let initialValues: IAgentWithdraw = {
         account_number: '',
-        bank_code: '',
+        account_name: '',
+        bank_name: '',
         amount: ''
     }
 
-    async function onSubmit (value: IWithdraw, formikHelpers: FormikHelpers<IWithdraw | any>){
-        value = {
-            ...value,
-            full_name: user?.first_name ? user?.first_name + " " + user?.last_name : value.full_name,
-        }
-        value.redirect_url = 'http://localhost:3000/wallet'
-        
+    async function onSubmit (value: IAgentWithdraw, formikHelpers: FormikHelpers<IAgentWithdraw | any>){
+        console.log(value)
         try{
             let data = await withdraw(value).unwrap()
+            console.log(data)
             
             if(data.status === 'success'){
                 dispatch(toggleSnackBar({
@@ -121,22 +117,39 @@ export function FPFormikWithdraw(user: IUser | undefined, withdraw: ITrigger<IWi
         catch(err){
             if(err){
                 let error: any = err
-                formikHelpers.setErrors(error.data.errors)
+                console.log(error)
+                if(error.data.errors){
+                    formikHelpers.setErrors(error.data.errors)
+                }
+                if(error?.data){
+                    dispatch(toggleSnackBar({
+                        message: error?.data?.message,
+                        open: true,
+                        severity: 'error'
+                    }))
+                }
+                else{
+                    dispatch(toggleSnackBar({
+                        message: "An error just occured please try again",
+                        open: true,
+                        severity: 'error'
+                    }))
+                }
             }
         }
     }
 
     let validationSchema = () => {
         return Yup.object({
-            full_name: Yup
+            account_name: Yup
                 .string(),
             account_number: Yup
                 .string()
                 .required('Account Number field is required')
                 .min(10, 'please enter a valid account number'),
-            bank_code: Yup
+            bank_name: Yup
                 .string()
-                .required('Please select your bank'),
+                .required('Please select your bank name'),
             amount: Yup
                 .string()
                 .required('Please enter the amount your want to withdraw')
@@ -195,7 +208,9 @@ export function FPcreateAccForm(userData: IUser | null | undefined, createAccoun
         catch(err){
             if(err){
                 let error: any = err
-                formikHelpers.setErrors(error.data.errors)
+                if(error.data.errors){
+                    formikHelpers.setErrors(error.data.errors)
+                }
             }
         }
     }

@@ -15,11 +15,11 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path='/' element={<Navigate to="/dashboard" replace={true} />} />
-        <Route path='/user' element={<Users />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        {/* <Route path='/setting/*' element={<RequireAuth><SettingPage /></RequireAuth>} /> */}
-        <Route path='/setting/*' element={<SettingPage />} />
-        <Route path='/wallet' element={<Wallet />} />
+        <Route path='/user' element={<RequireAuth><Users /></RequireAuth>} />
+        <Route path='/dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} />
+        <Route path='/setting/*' element={<RequireAuth><SettingPage /></RequireAuth>} />
+        {/* <Route path='/setting/*' element={<SettingPage />} /> */}
+        <Route path='/wallet' element={<RequireAuth><Wallet /></RequireAuth>} />
         <Route path='/auth/*' element={<AuthRoute />} />
         <Route path='/verify/email' element={<VerifyEmail />} />
         {/* <Route path='/reset-password' element={<ResetPassword />} /> */}
