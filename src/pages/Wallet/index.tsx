@@ -48,7 +48,7 @@ export function Wallet(){
                 <TitlePage>Wallet</TitlePage>
                 <Wrapper styles="flex justify-center">
 
-                    <div className="w-4/12">
+                    <div className="w-10/12 sm:w-4/12">
                         <WalletBalance open={open} setOpen={setOpen}/>
                     </div>
 
