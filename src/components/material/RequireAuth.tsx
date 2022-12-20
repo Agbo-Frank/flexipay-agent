@@ -15,6 +15,8 @@ export function RequireAuth({ children }: React.PropsWithChildren) {
     if(!loadingUser && (!data?.result?.data || data?.status === 'failed')){
         return <Navigate to={`/auth/register` } replace />;
     }
+
+    console.log(data)
   
     return (
         <>
