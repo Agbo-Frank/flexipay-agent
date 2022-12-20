@@ -21,8 +21,8 @@ export function FPLogin(login: ITrigger<ILogin, IAuthResponse>){
             let data = await login(value).unwrap()
             console.log(data)
             if(data.status === 'success'){
-                if(data?.data?.roles?.includes("AGENT")){
-                    signIn(`${data?.data.token}`, () => {
+                if(data?.roles?.includes("AGENT")){
+                    signIn(`${data?.token}`, () => {
                         if(data.is_verified){
                             // navigate('/register/step/4')
                             navigate('/dashboard') 

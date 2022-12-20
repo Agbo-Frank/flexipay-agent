@@ -18,10 +18,10 @@ export function Login(){
                 <Collapse in={data?.status === 'failed'}>
                     <Alert severity="error">{data?.message}</Alert>
                 </Collapse>
-                <Collapse in={data?.status === 'success' && data?.data?.roles?.includes("AGENT")}>
+                <Collapse in={data?.status === 'success' && data?.roles?.includes("AGENT")}>
                     <Alert severity="success">{data?.message}</Alert>
                 </Collapse>
-                <Collapse in={data?.status === 'success' && !data?.data?.roles?.includes("AGENT")}>
+                <Collapse in={data?.status === 'success' && !data?.roles?.includes("AGENT")}>
                     <Alert severity="error">
                         Unauthorized User, 
                         <strong>
