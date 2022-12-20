@@ -18,8 +18,17 @@ export function Login(){
                 <Collapse in={data?.status === 'failed'}>
                     <Alert severity="error">{data?.message}</Alert>
                 </Collapse>
-                <Collapse in={data?.status === 'success'}>
+                <Collapse in={data?.status === 'success' && data?.data?.roles?.includes("AGENT")}>
                     <Alert severity="success">{data?.message}</Alert>
+                </Collapse>
+                <Collapse in={data?.status === 'success' && !data?.data?.roles?.includes("AGENT")}>
+                    <Alert severity="error">
+                        Unauthorized User, 
+                        <strong>
+                            <Link to="/auth/register"> register </Link>
+                        </strong> 
+                        as an Agent or contact the admin to make you and agent
+                    </Alert>
                 </Collapse>
                 {/* {data?.status === 'failed' && <Alert severity="error">{data.message}</Alert>} */}
                 <FormInput2 

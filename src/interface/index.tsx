@@ -181,7 +181,10 @@ export interface IResponse<T> {
 
 export interface IAuthResponse extends IResponse<{data: IUser}> {
     is_verified?: boolean;
-    token?: string
+    data: {
+        token?: string;
+        roles?: ('USER' | "AGENT")[]
+    }
 }
 
 export interface ILogin {

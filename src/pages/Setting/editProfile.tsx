@@ -129,11 +129,17 @@ export function EditProfile(){
 
                             <div className="w-full">
                                 <span className="m-1 block">Date of Birth</span>
-                                <DateInput
+                                <FormInput
+                                    type="date"
+                                    name="dob"
+                                    Icon={PhoneIcon}
+                                    label={user?.dob || "Date of birth"}
+                                    formik={formik} />
+                                {/* <DateInput
                                     label="Date of Birth" 
                                     name="dob"
                                     formik={formik}
-                                />
+                                /> */}
                             </div>
                         </div>
                         <div className="md:flex justify-between md:space-x-4">

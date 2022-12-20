@@ -21,15 +21,20 @@ export function FPLogin(login: ITrigger<ILogin, IAuthResponse>){
             let data = await login(value).unwrap()
             console.log(data)
             if(data.status === 'success'){
-                signIn(`${data.token}`, () => {
-                    if(data.is_verified){
-                        // navigate('/register/step/4')
-                        navigate('/dashboard') 
-                    }
-                    else{
-                        navigate('/auth/verify/email?email=' + value.email)
-                    }
-                })
+                if(data?.data?.roles?.includes("AGENT")){
+                    signIn(`${data?.data.token}`, () => {
+                        if(data.is_verified){
+                            // navigate('/register/step/4')
+                            navigate('/dashboard') 
+                        }
+                        else{
+                            navigate('/auth/verify/email?email=' + value.email)
+                        }
+                    })
+                }
+                // else{
+
+                // }
             }
         }
         catch(err){

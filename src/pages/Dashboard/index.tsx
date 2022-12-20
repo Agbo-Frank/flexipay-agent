@@ -3,20 +3,12 @@ import { Link } from "react-router-dom";
 import { Wrapper } from "../../components/StyleComponents";
 import {DashboardWrapper} from "../../components/layout";
 import { 
-    BagIcon, CartIcon, 
-    NairaIcon, UserIcon, WithdrawIcon 
+    NairaIcon, UserIcon,
 } from "../../components/icons";
 import {Iicon} from "../../interface";
-// import { useGetOrderQuery } from "../../redux/slice/order";
-// import { useGetVendorProductsQuery } from "../../redux/slice/productSlice";
-// import { useGetVendorQuery } from "../../redux/slice/StoreSlice";
-import { useGetUserQuery, useLazyGetWalletDetailsQuery } from "../../redux/api";
-import { CreateAccForm } from "../Wallet/createAccForm";
-import FundWallet from "../Wallet/FundWallet";
-import { WalletBalance } from "../Wallet/WalletBalance";
 import WithdrawalForm from "../Wallet/WithdrawalForm";
 import NewUsers from "./NewUsers";
-import { useLazyGetAgentBalanceQuery, useLazyGetAgentDashboardQuery } from "../../redux/api/agent";
+import { useLazyGetAgentDashboardQuery } from "../../redux/api/agent";
 
 function DashboardCard({Icon, color, title, count, link}: {Icon: React.FC<Iicon>; color: string, title: string, link: string, count: string}){
     return(

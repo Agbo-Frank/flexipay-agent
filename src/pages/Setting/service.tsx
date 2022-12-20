@@ -13,6 +13,7 @@ export function FPFormikEditUser(user: IUser | undefined, edit: ITrigger<Partial
     }
 
     async function onSubmit (value: Partial<IUser>, formikHelpers: FormikHelpers<IUser| any>){
+        console.log(value)
         value = {
             first_name: value.first_name || user?.first_name,
             last_name: value.last_name || user?.last_name,
