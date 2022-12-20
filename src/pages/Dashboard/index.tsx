@@ -66,7 +66,7 @@ export function Dashboard(){
                         Icon={NairaIcon}
                         link="/wallet"
                         title="Balance"
-                        count={data?.account.current_balance.toString() || "0" }
+                        count={data?.account?.current_balance.toString() || "0" }
                     />
                 </div>
 

@@ -19,7 +19,7 @@ export function NewUsers(){
         })
     })
     useEffect(() => {
-        getAgentUsers({quantity: 5})
+        getAgentUsers({quantity: 15})
     }, [])
     return(
         <div>
@@ -43,7 +43,7 @@ export function NewUsers(){
                         <TablePagination
                             rowsPerPageOptions={[15]}
                             component="div"
-                            count={100}
+                            count={pagination?.total || -1}
                             rowsPerPage={15}
                             page={page}
                             onPageChange={(e, page) => setPage(page)}
